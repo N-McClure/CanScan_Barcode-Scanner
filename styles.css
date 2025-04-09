@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0 10px;
+}
+
+/* Splash Screen Logo */
+#splash-logo {
+    max-width: 150px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+/* Main Content Logo: Always half size (75px) */
+#logo {
+    max-width: 75px;
+    transition: max-width 0.3s ease;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+/* Splash Screen Styles */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.wrapping h1 {
+    font-size: 30px;
+    font-weight: 750;
+    text-align: center;
+    color: rgb(195, 1, 53, 255);
+}
+
+.wrapping {
+    height: 650px;
+    padding: 35px 40px;
+
+    backdrop-filter: blur(5.25px);
+    -webkit-backdrop-filter: blur(5.25px);
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgb(35, 35, 35, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background: rgb(255, 255, 255, 0.30);
+    border: 1px solid rgb(255, 255, 255, 0.34);
+    flex-basis: 400px;
+}
+
+.wrapping img {
+    height: 75%;
+    width: 100%;
+}
+
+.wrapping button {
+    height: 55px;
+    color: white;
+    background-color: rgb(195, 1, 53, 255);
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 1rem 3rem;
+    margin-top: 20px;
+    margin-left: 45px;
+}
+
+.wrapping button:hover {
+    background-color: rgb(254, 132, 21, 255);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+footer {
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+/* Media Query to make the app responsive and pretty on mobile as well as desktop: */
+@media screen and (max-width: 767px) {
+    .wrapping {
+        height: 100%;
+        width: 100%;
+        padding: 10px 20px;
+        margin: 20px;
+    }
+}

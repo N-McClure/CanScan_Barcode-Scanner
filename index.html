@@ -1,0 +1,94 @@
+<!--
+
+    Project Name: CanScan
+    Project Description: This site allows a user to scan a barcode and tell them if it is a Canadian product or not via scanning the Barcode.
+    Date Started: 2025-02-24
+    Date Finished: 
+    
+    -------------------------------------------------------------------------------------------------------------------------------
+
+    Developer Name: Nick McClure
+    Portfolio / Personal Site: https://n-mcclure.github.io/
+    GitHub: https://github.com/N-McClure
+    LinkedIn: https://www.linkedin.com/in/nick-mcclure-578565295/
+    YouTube: https://www.youtube.com/@NickMcClure_ProgrammingGuy
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="multimedia/Logo.jpg">
+    <title>CanScan | Canadian Product Finder</title>
+</head>
+
+<body>
+    <!--
+        MUST HAVES:
+        -----------
+        - Title / Load up page.
+            - App logo.
+            - App title.
+            - Footer with developer / "company" info.
+            - Button to go to scanning page.
+            - Brief description of what the application does.
+
+        - Main page to scan barcode.
+            - Product information display area.
+            - Button to start scan.
+
+        - Error handling for non-barcode scans.
+        - Responsive UI for Mobile and Desktop usage.
+    -->
+
+    <!-- Links to External Styling files: -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Div for a loading screen before the application opens: -->
+    <div id="splash-screen">
+        <img id="splash-logo" src="multimedia/Logo.jpg">
+    </div>
+
+    <!-- Div for the wrapping of the entire application: -->
+    <div class="wrapping">
+        <!-- Div for the Application Logo: -->
+        <div class="app-logo">
+            <img src="multimedia/Logo.jpg">
+        </div>
+
+        <!-- Div for the Application Title: -->
+        <div class="header">
+            <h1>CanScan | Canadian Product Finder & Barcode Scanner</h1>
+        </div>
+
+        <br>
+
+        <!-- Div for a breif description of what the application does: -->
+        <div class="app-desc">
+            <p>This app allows you to scan barcodes and find out if they are Canadian products. Simply input the barcode
+                and click the 'Scan' button to find out.</p>
+        </div>
+
+        <br>
+
+        <!-- Button to navigate to the scanning page: -->
+        <div class="nav-to-scan">
+            <a href="scan.html"><button>Start Scanning</button></a>
+        </div>
+
+        <!-- Footer with developer / "company" info: -->
+        <footer>
+            <p>Copyright &copy 2025 CanScan. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Connection to External JavaScript File: -->
+    <script src="script.js"></script>
+</body>
+
+</html>
