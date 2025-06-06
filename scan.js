@@ -1,101 +1,52 @@
-// Global variables
-let scannerActive = false;
-let currentBarcode = "";
+document.getElementById("checkButton").addEventListener("click", () => {
+    const barcode = document.getElementById("barcodeInput").value.trim();
+    if (!barcode || !/^\d+$/.test(barcode)) {
+        alert("Please enter a valid numeric barcode.");
+        return;
+    }
 
-// Initialize scanner when the user clicks the "Start Scanning" button
-document.getElementById('startCameraButton').addEventListener('click', function() {
-    if (scannerActive) return;
-    startScanner();
+    checkIfCanadianByPrefix(barcode);
+    fetchProductData(barcode);
 });
 
-// Function to initialize and start the barcode scanner
-function startScanner() {
-    // Access the user's camera
-    Quagga.init({
-        inputStream: {
-            name: "Live",
-            type: "LiveStream",
-            target: document.querySelector('#reader'),
-            constraints: {
-                facingMode: "environment"
-            }
-        },
-        decoder: {
-            readers: ["ean_reader", "ean_13_reader", "upc_reader", "upc_e_reader"]
-        }
-    }, function(err) {
-        if (err) {
-            console.error("Error initializing scanner:", err);
-            return;
-        }
+function checkIfCanadianByPrefix(code) {
+    const prefix = code.substring(0, 3);
+    const canadianPrefixes = [
+        "060", "061", "062", "063", "064", "065", "066", "067", "068", "069",
+        "754", "755"
+    ];
 
-        Quagga.start();
-        scannerActive = true;
-        document.getElementById('startCameraButton').style.display = "none"; // Hide the button
-    });
-
-    // Listen for a successful barcode scan
-    Quagga.onDetected(handleBarcodeScan);
+    if (canadianPrefixes.includes(prefix)) {
+        alert(`✅ This barcode (${code}) appears to be Canadian (prefix: ${prefix}).`);
+    } else {
+        alert(`❌ This barcode (${code}) is not recognized as Canadian (prefix: ${prefix}).`);
+    }
 }
 
-// Function to handle the barcode detection
-function handleBarcodeScan(result) {
-    currentBarcode = result.codeResult.code;
-    console.log("Scanned Barcode:", currentBarcode);
-
-    // Stop the scanner after detecting the barcode
-    Quagga.stop();
-
-    // Fetch product data using the barcode (assuming openfoodfacts API or similar)
-    fetchProductData(currentBarcode);
-}
-
-// Function to fetch product data
 function fetchProductData(barcode) {
-    const url = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`; // Example API
+    const url = `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`;
     fetch(url)
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
             if (data.status === 1) {
                 displayProductInfo(data.product);
-                checkIfCanadian(data.product);
             } else {
-                alert("Product not found or could not be retrieved.");
+                alert("❌ Product not found in OpenFoodFacts.");
             }
         })
-        .catch(error => {
-            console.error("Error fetching product data:", error);
-            alert("Failed to fetch product information.");
+        .catch(err => {
+            console.error("Fetch error:", err);
+            alert("❌ Could not retrieve product information.");
         });
 }
 
-// Function to display product information
 function displayProductInfo(product) {
     document.getElementById("productName").textContent = product.product_name || "-";
     document.getElementById("productBrand").textContent = product.brands || "-";
     document.getElementById("productCategory").textContent = product.categories || "-";
-    document.getElementById("productDescription").textContent = product.description || "-";
+    document.getElementById("productDescription").textContent = product.generic_name || "-";
     document.getElementById("productCountry").textContent = product.countries || "-";
     document.getElementById("productImage").src = product.image_url || "";
 
-    document.getElementById("productInfo").style.display = "block"; // Show product info
-    document.getElementById("rescanButton").style.display = "inline-block"; // Show rescan button
+    document.getElementById("productInfo").style.display = "block";
 }
-
-// Function to check if the product is Canadian
-function checkIfCanadian(product) {
-    const country = product.countries || "";
-    if (country.toLowerCase().includes("canada")) {
-        alert("This product is Canadian!");
-    } else {
-        alert("This product is not Canadian.");
-    }
-}
-
-// Rescan functionality
-document.getElementById('rescanButton').addEventListener('click', function() {
-    // Reset and restart scanning
-    Quagga.stop();
-    document.getElementById('productInfo').style.display = "none";
-    startScanner();
-});
